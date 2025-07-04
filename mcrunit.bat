@@ -1,12 +1,16 @@
 @echo off
 mode con: cols=61 lines=22
-title [v2.0]
+title [v1.0]
 set "filename=%~f0"
 setlocal EnableDelayedExpansion
 set "keywords=server arclight paper spigot bukkit glowstone sponge purpur pufferfish magma mohist cat playit"
 set "searchDir=%~dp0"
 
 :mainarea
+powershell -NoProfile -Command ^
+  "$size = $Host.UI.RawUI.WindowSize; $buffer = $Host.UI.RawUI.BufferSize; " ^
+  "$buffer.Height = 1000; $buffer.Width = $size.Width; " ^
+  "$Host.UI.RawUI.BufferSize = $Host.UI.RawUI.WindowSize"
 cls
 
 echo                   __    __     ______    
@@ -21,12 +25,12 @@ echo      \ \_\ \_\  \ \_____\  \ \_\\"\_\     \ \_\    \ \_\
 echo       \/_/ /_/   \/_____/   \/_/ \/_/      \/_/     \/_/ 
 echo.
 echo  - Type "configarea" to configure the server to your liking.
-echo  - To run the server, type "run".
+echo  - Type "run" to run the server.
 echo.
 echo  ---------------------------Notes---------------------------
 echo.
 echo  - While running, type "help" for a list of all commands.
-echo  - While running, type "exit" to save and stop the server.
+echo  - While running, type "stop" to save and stop the server.
 echo  - You can't close all the windows with the "stop"
 echo    command so you have to manually close them :P
 echo.
@@ -42,13 +46,17 @@ goto mainarea
 pause
 
 :configarea
+powershell -NoProfile -Command ^
+  "$size = $Host.UI.RawUI.WindowSize; $buffer = $Host.UI.RawUI.BufferSize; " ^
+  "$buffer.Height = 1000; $buffer.Width = $size.Width; " ^
+  "$Host.UI.RawUI.BufferSize = $Host.UI.RawUI.WindowSize"
 cls
 
 echo.
 echo          TYPE "mainarea" TO GO BACK TO THE MAIN AREA.
 echo.
-echo  - Type "changeram" to change the ammount of ram you
-echo    want to allocate to your server
+echo  - Type "changeram" to change the ammount of RAM you
+echo    want to allocate for your server to use.
 echo.
 
 set /p option1= ">> "
@@ -62,21 +70,28 @@ goto mainarea
 pause
 
 :changeram
+powershell -NoProfile -Command ^
+  "$size = $Host.UI.RawUI.WindowSize; $buffer = $Host.UI.RawUI.BufferSize; " ^
+  "$buffer.Height = 1000; $buffer.Width = $size.Width; " ^
+  "$Host.UI.RawUI.BufferSize = $Host.UI.RawUI.WindowSize"
 cls
 
 echo.
-
-set /p input=Type "Xms5G"(Min Ram usable):
-set /p replacement=Type it again but with your desired number of RAM:
-
+set /p input=Type "s2G"(Min RAM usable): 
+echo.
+set /p replacement=Type it again but with your desired number of RAM: 
+echo.
 powershell -Command "(Get-Content '%filename%') | Foreach-Object {$_ -replace '%input%', '%replacement%'} | Set-Content '%filename%'"
+powershell -Command "Write-Host '1/2 steps done' -ForegroundColor Green"
+echo.
 
-set /p input2=Type "Xmx6G"(Max Ram usable):
-set /p replacement2=Type it again but with your desired number of RAM:
-
+echo.
+set /p input2=Type "x2G"(Max RAM usable): 
+echo.
+set /p replacement2=Type it again but with your desired number of RAM: 
 powershell -Command "(Get-Content '%filename%') | Foreach-Object {$_ -replace '%input2%', '%replacement2%'} | Set-Content '%filename%'"
 echo.
-echo Done, reloading...
+powershell -Command "Write-Host '2/2 steps done, reloading...' -ForegroundColor Green"
 echo.
 timeout /t 2 /nobreak >nul
 start /B /c "%~f0" & goto configarea
@@ -84,8 +99,13 @@ start /B /c "%~f0" & goto configarea
 pause
 
 :info
+powershell -NoProfile -Command ^
+  "$size = $Host.UI.RawUI.WindowSize; $buffer = $Host.UI.RawUI.BufferSize; " ^
+  "$buffer.Height = 1000; $buffer.Width = $size.Width; " ^
+  "$Host.UI.RawUI.BufferSize = $Host.UI.RawUI.WindowSize"
 cls
 
+echo.
 echo          TYPE "mainarea" TO GO BACK TO THE MAIN AREA.
 echo.
 echo.
@@ -104,6 +124,10 @@ goto mainarea
 pause
 
 :run
+powershell -NoProfile -Command ^
+  "$size = $Host.UI.RawUI.WindowSize; $buffer = $Host.UI.RawUI.BufferSize; " ^
+  "$buffer.Height = 1000; $buffer.Width = $size.Width; " ^
+  "$Host.UI.RawUI.BufferSize = $buffer"
 cls
 
 echo.
@@ -139,7 +163,7 @@ for %%k in (%keywords%) do (
 	for %%f in ("%searchDir%\*%%k*.jar") do (
 		if exist "%%f" (
         set "found2=1"
-		java -Xmx6G -Xms5G -jar "%%f" nogui 
+		java -Xmx2G -Xms2G -jar "%%f" nogui 
 		)
 	)
 )
