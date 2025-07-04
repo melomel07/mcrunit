@@ -2,6 +2,9 @@
 
 A lightweight program that runs your Minecraft Java/Bedrock Server & Python Discord Bot with Style & Ease!
 
+## Preview
+![preview](preview.jpg)
+
 ## How to add MCrunit to your server
 
 https://telegra.ph/MCrunit-07-04-2
